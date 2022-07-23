@@ -9,9 +9,9 @@
 //! let model = Model::new(&format!("tests{}add.bin", MAIN_SEPARATOR))?;
 //! # Ok::<(), tflitec::Error>(())
 //! ```
-use crate::bindings::{TfLiteModel, TfLiteModelCreateFromFile, TfLiteModelDelete};
+use crate::bindings::{TfLiteModel, TfLiteModelCreateFromFile, TfLiteModelCreate, TfLiteModelDelete};
 use crate::{Error, ErrorKind, Result};
-use std::ffi::CString;
+use std::ffi::{CString, c_void};
 use std::fmt::{Debug, Formatter};
 
 /// A TensorFlow Lite model used by the [`Interpreter`][crate::interpreter::Interpreter] to perform inference.
@@ -44,6 +44,18 @@ impl Model {
             let path = CString::new(filepath).unwrap();
             TfLiteModelCreateFromFile(path.as_ptr())
         };
+        if model_ptr.is_null() {
+            Err(Error::new(ErrorKind::FailedToLoadModel))
+        } else {
+            Ok(Model { model_ptr })
+        }
+    }
+
+    pub fn with_data(data: *const c_void, size: u64) -> Result<Model> {
+        let model_ptr = unsafe {
+            TfLiteModelCreate(data, size)
+        };
+
         if model_ptr.is_null() {
             Err(Error::new(ErrorKind::FailedToLoadModel))
         } else {
