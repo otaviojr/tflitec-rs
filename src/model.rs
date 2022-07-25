@@ -51,7 +51,7 @@ impl Model {
         }
     }
 
-    pub fn with_data(data: *const u8, size: u64) -> Result<Model> {
+    pub fn with_data(data: *const [u8], size: u64) -> Result<Model> {
         let model_ptr = unsafe {
             TfLiteModelCreate(data as *const c_void, size)
         };
