@@ -5,7 +5,7 @@ use std::fmt::Debug;
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-const TF_BRANCH: &str = "r2.9";
+const TF_BRANCH: &str = "master";
 const TF_GIT_URL: &str = "https://github.com/otaviojr/tensorflow.git";
 
 fn target_os() -> String {
