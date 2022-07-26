@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 const TF_BRANCH: &str = "r2.9";
-const TF_GIT_URL: &str = "https://github.com/tensorflow/tensorflow.git";
+const TF_GIT_URL: &str = "https://github.com/otaviojr/tensorflow.git";
 
 fn target_os() -> String {
     env::var("CARGO_CFG_TARGET_OS").expect("Unable to get TARGET_OS")
